@@ -303,7 +303,7 @@ public class VistaProductos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CProductos objetoProducto= new CProductos();
-        objetoProducto.ModificarProducto(txt_producto_id, txt_producto_nombre, txt_producto_referencia, txt_producto_marca, txt_producto_valor_hora);
+        objetoProducto.ModificarProducto(txt_producto_id, txt_producto_nombre, txt_producto_referencia, txt_producto_marca, txt_producto_valor_hora,selectFile);
         objetoProducto.MostrarProductos(tb_lista_productos);
     }//GEN-LAST:event_jButton2ActionPerformed
 

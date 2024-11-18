@@ -197,7 +197,7 @@ public class CProductos {
         }
     }
 
-    public void ModificarProducto(JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora){
+    public void ModificarProducto(JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora, File foto) {
         
         setCodigo(Integer.parseInt(paramId.getText()) );
         setNombre(paramNombre.getText());
@@ -206,22 +206,29 @@ public class CProductos {
         setPrecio_hora(Float.parseFloat(paramPrecioHora.getText()));
         
         Cconexion objetoConexion = new Cconexion();
-        String consulta= "update Productos SET nombre=?, referencia=?, marcar=?, precio_hora=? where Productos.id =?;";
+        String consulta= "update Productos SET nombre=?, referencia=?, marcar=?, precio_hora=?,foto=? where Productos.id =?;";
         
         try {
+            
+             FileInputStream fis = new FileInputStream(foto);
+             
             CallableStatement cs= objetoConexion.establecerConexion().prepareCall(consulta);
             cs.setString(1, getNombre());
             cs.setString(2, getReferencia());
             cs.setString(3, getMarcar());
             cs.setFloat(4, getPrecio_hora());
-            cs.setInt(5, getCodigo());
+            cs.setBinaryStream(5, fis, (int)foto.length());
+            cs.setInt(6, getCodigo());
+          
             
             cs.execute();
             
             JOptionPane.showMessageDialog(null, "Se modificó el producto");
-        } catch (HeadlessException | SQLException e) {
+        } catch (HeadlessException | FileNotFoundException | SQLException e ) {
              JOptionPane.showMessageDialog(null, "Error: "+e.toString());
         }
+        
+       
     }
     
      public void EliminarProducto(JTextField paramId){
