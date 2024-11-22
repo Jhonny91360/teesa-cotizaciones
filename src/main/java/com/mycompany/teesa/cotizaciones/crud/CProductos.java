@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +32,7 @@ public class CProductos {
     String nombre;
     String referencia ;
     String marcar ;
+    String descripcion ;
     Float precio_hora; 
 
     public int getCodigo() {
@@ -72,6 +74,15 @@ public class CProductos {
     public void setPrecio_hora(Float precio_hora) {
         this.precio_hora = precio_hora;
     }
+    
+     public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
    
     public void MostrarProductos(JTable paramTablaTotalProductos){
         Cconexion objetoConexion = new Cconexion();
@@ -85,6 +96,7 @@ public class CProductos {
         modelo.addColumn("Referencia");
         modelo.addColumn("Marca");
         modelo.addColumn("Valor/hora");
+        modelo.addColumn("Descripcion");
         modelo.addColumn("Foto");
         
         sql= "select * from Productos";
@@ -108,6 +120,7 @@ public class CProductos {
                     String referencia =rs.getString("referencia");
                     String marcar =rs.getString("marcar");
                     String precioHora =rs.getString("precio_hora");
+                    String descripcion=rs.getString("descripcion");
                     
                     byte [] imageBytes = rs.getBytes("foto");
                     Image foto = null;
@@ -119,9 +132,9 @@ public class CProductos {
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, "Error: "+e.toString());
                         }
-                        modelo.addRow(new Object[]{id,nombre,referencia,marcar,precioHora,foto} );
+                        modelo.addRow(new Object[]{id,nombre,referencia,marcar,precioHora,descripcion,foto} );
                     }else{
-                        modelo.addRow(new Object[]{id,nombre,referencia,marcar,precioHora,""} );
+                        modelo.addRow(new Object[]{id,nombre,referencia,marcar,precioHora,descripcion,""} );
                     }
                     //modelo.addRow(datos);
                     paramTablaTotalProductos.setModel(modelo);
@@ -133,15 +146,16 @@ public class CProductos {
         }
     }
     
-    public void InsertarProducto(JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora, File foto){
+    public void InsertarProducto(JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora, File foto,JTextArea paramDescripcion){
         
         setNombre(paramNombre.getText());
         setReferencia(paramReferencia.getText());
         setMarcar(paramMarca.getText());
         setPrecio_hora(Float.parseFloat(paramPrecioHora.getText()));
+        setDescripcion(paramDescripcion.getText());
         
         Cconexion objetoConexion = new Cconexion();
-        String consulta= "insert into Productos(nombre,referencia,marcar,precio_hora,foto) values(?,?,?,?,?);";
+        String consulta= "insert into Productos(nombre,referencia,marcar,precio_hora,foto,descripcion) values(?,?,?,?,?,?);";
         
         try {
             FileInputStream fis = new FileInputStream(foto);
@@ -152,6 +166,7 @@ public class CProductos {
             cs.setString(3, getMarcar());
             cs.setFloat(4, getPrecio_hora());
             cs.setBinaryStream(5, fis, (int)foto.length());
+            cs.setString(6, getDescripcion());
             
             cs.execute();
             
@@ -161,7 +176,7 @@ public class CProductos {
         }
     }
     
-    public void SeleccionarProduct(JTable paramTablaProducto, JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramValorHora, JLabel paramFoto){
+    public void SeleccionarProduct(JTable paramTablaProducto, JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramValorHora, JLabel paramFoto ,JTextArea paramDescripcion){
         
         try {
             int fila = paramTablaProducto.getSelectedRow();
@@ -173,12 +188,13 @@ public class CProductos {
                 paramReferencia.setText(paramTablaProducto.getValueAt(fila, 2).toString());
                 paramMarca.setText(paramTablaProducto.getValueAt(fila, 3).toString());
                 paramValorHora.setText(paramTablaProducto.getValueAt(fila, 4).toString());
+                paramDescripcion.setText(paramTablaProducto.getValueAt(fila,5).toString());
                 
-                String valor_imagen=  paramTablaProducto.getValueAt(fila, 5).toString();
+                String valor_imagen=  paramTablaProducto.getValueAt(fila, 6).toString();
                
                 
                 if(valor_imagen!=null && !"".equals(valor_imagen)){
-                    Image imagen= (Image) paramTablaProducto.getValueAt(fila, 5);
+                    Image imagen= (Image) paramTablaProducto.getValueAt(fila, 6);
                     ImageIcon originalIcon= new ImageIcon(imagen);
                     int lbl_width= paramFoto.getWidth();
                     int lbl_height= paramFoto.getHeight();
@@ -197,16 +213,17 @@ public class CProductos {
         }
     }
 
-    public void ModificarProducto(JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora, File foto) {
+    public void ModificarProducto(JTextField paramId, JTextField paramNombre, JTextField paramReferencia, JTextField paramMarca, JTextField paramPrecioHora, File foto,JTextArea paramDescripcion) {
         
         setCodigo(Integer.parseInt(paramId.getText()) );
         setNombre(paramNombre.getText());
         setReferencia(paramReferencia.getText());
         setMarcar(paramMarca.getText());
         setPrecio_hora(Float.parseFloat(paramPrecioHora.getText()));
+        setDescripcion(paramDescripcion.getText());
         
         Cconexion objetoConexion = new Cconexion();
-        String consulta= "update Productos SET nombre=?, referencia=?, marcar=?, precio_hora=?,foto=? where Productos.id =?;";
+        String consulta= "update Productos SET nombre=?, referencia=?, marcar=?, precio_hora=?,foto=?, descripcion=? where Productos.id =?;";
         
         try {
             
@@ -218,7 +235,8 @@ public class CProductos {
             cs.setString(3, getMarcar());
             cs.setFloat(4, getPrecio_hora());
             cs.setBinaryStream(5, fis, (int)foto.length());
-            cs.setInt(6, getCodigo());
+            cs.setString(6, getDescripcion());
+            cs.setInt(7, getCodigo());
           
             
             cs.execute();
