@@ -5,10 +5,14 @@
 package com.mycompany.teesa.cotizaciones.crud;
 
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -156,4 +160,136 @@ public class Cclientes {
         }
     }
     
-}
+    public void insertarCliente(JTextField paramNitCedula, JTextField paramCliente, JTextField paramDirrecion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
+        
+        setNitCedula(paramNitCedula.getText());
+        setCliente(paramCliente.getText());
+        setDireccion(paramDirrecion.getText());
+        setCiudad(paramCiudad.getText());
+        setTelefonoFijo(paramTelefonoFijo.getText());
+        setNumeroCelular(paramNumeroCelular.getText());
+        setCorreo(paramCorreo.getText());
+        setCorreoOpcional(paramCorreoOpcional.getText());
+        setFechaRegistro(paramFechaRegistro.getText());
+        
+        Cconexion objetoConexion = new Cconexion();
+        
+        String consulta = "INSERT INTO clientes  (NIT_CEDULA,Cliente,Dirección,Ciudad,Telefono_fijo,Numero_celular,Correo,Corre_opcional,Fecha_registro) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try {
+            
+            CallableStatement cs = objetoConexion.establecerConexion().prepareCall(consulta);
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate parsedFechaRegistro = LocalDate.parse(getFechaRegistro(), formatter);
+            
+            cs.setString(1, getNitCedula());
+            cs.setString(2, getCliente());
+            cs.setString(3, getDireccion());
+            cs.setString(4, getCiudad());
+            cs.setString(5, getTelefonoFijo());
+            cs.setString(6, getNumeroCelular());
+            cs.setString(7, getCorreo());
+            cs.setString(8, getCorreoOpcional());
+            cs.setObject(9, parsedFechaRegistro);
+            
+            cs.execute();
+                   
+           JOptionPane.showMessageDialog(null,"Se inertó correctamente");
+            
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Error:" + e.toString());
+        }
+        
+    }    
+        public void seleccionarCliente(JTable paramTablaClientes, JTextField paramNitCedula, JTextField paramCliente, JTextField paramDireccion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
+            
+            try {
+                
+                int fila=paramTablaClientes.getSelectedRow();
+                
+                if (fila>=0) {
+                    paramNitCedula.setText(paramTablaClientes.getValueAt(fila, 0).toString());
+                    paramCliente.setText(paramTablaClientes.getValueAt(fila, 1).toString());
+                    paramDireccion.setText(paramTablaClientes.getValueAt(fila, 2).toString());
+                    paramCiudad.setText(paramTablaClientes.getValueAt(fila, 3).toString());
+                    paramTelefonoFijo.setText(paramTablaClientes.getValueAt(fila, 4).toString());
+                    paramNumeroCelular.setText(paramTablaClientes.getValueAt(fila, 5).toString());
+                    paramCorreo.setText(paramTablaClientes.getValueAt(fila, 6).toString());
+                    paramCorreoOpcional.setText(paramTablaClientes.getValueAt(fila, 7).toString());
+                    paramFechaRegistro.setText(paramTablaClientes.getValueAt(fila, 8).toString());
+                }
+                
+                else
+                {
+                JOptionPane.showMessageDialog(null,"Fila no seleccionada");    
+                }    
+                
+            } catch (Exception e) {
+                
+                JOptionPane.showMessageDialog(null,"Error:" + e.toString());
+                
+            }
+            
+        }
+         public void ModificarClientes(JTextField paramNitCedula, JTextField paramCliente, JTextField paramDirrecion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
+        
+        setNitCedula(paramNitCedula.getText());
+        setCliente(paramCliente.getText());
+        setDireccion(paramDirrecion.getText());
+        setCiudad(paramCiudad.getText());
+        setTelefonoFijo(paramTelefonoFijo.getText());
+        setNumeroCelular(paramNumeroCelular.getText());
+        setCorreo(paramCorreo.getText());
+        setCorreoOpcional(paramCorreoOpcional.getText());
+        setFechaRegistro(paramFechaRegistro.getText());
+        
+        Cconexion objetoConexion = new Cconexion();
+        
+        String consulta = "UPDATE clientes SET NIT_CEDULA=?, Cliente=?, Dirección=?, Ciudad=?, Telefono_fijo=?, Numero_celular=?, Correo=?, Corre_opcional=?, Fecha_registro=?";
+        
+        try {
+            
+            CallableStatement cs = objetoConexion.establecerConexion().prepareCall(consulta);
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate parsedFechaRegistro = LocalDate.parse(getFechaRegistro(), formatter);
+            
+            cs.setString(1, getNitCedula());
+            cs.setString(2, getCliente());
+            cs.setString(3, getDireccion());
+            cs.setString(4, getCiudad());
+            cs.setString(5, getTelefonoFijo());
+            cs.setString(6, getNumeroCelular());
+            cs.setString(7, getCorreo());
+            cs.setString(8, getCorreoOpcional());
+            cs.setObject(9, parsedFechaRegistro);
+            
+            cs.execute();
+                   
+           JOptionPane.showMessageDialog(null,"Se modificó correctamente");
+            
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Error:" + e.toString());
+        }
+    }   
+         public void EliminarCliente(JTextField paramNitCedula){
+        
+        setNitCedula(paramNitCedula.getText());
+
+        Cconexion objetoConexion = new Cconexion();
+        String consulta= "delete from clientes where clientes.NIT_CEDULA=?";
+        
+        try {
+            CallableStatement cs= objetoConexion.establecerConexion().prepareCall(consulta);
+            cs.setString(1, getNitCedula());
+            
+            cs.execute();
+            
+            JOptionPane.showMessageDialog(null, "Se eliminó el cliente");
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error");
+        }    
+        
+    }    
+    }

@@ -15,6 +15,7 @@ public class Vistaclientes extends javax.swing.JFrame {
      */
     public Vistaclientes() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
         Cclientes objetoClientes = new Cclientes();
         objetoClientes.MostrarClientes(tbListaClientes);
@@ -79,10 +80,25 @@ public class Vistaclientes extends javax.swing.JFrame {
         jLabel9.setText("Fecha_registro:");
 
         jButton1.setText("GUARDAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("MODIFICAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("ELIMINAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,25 +122,16 @@ public class Vistaclientes extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCelularClientes))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(txtClienteClientes))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCiudadClientes)
-                                    .addComponent(txtDireccionClientes)
-                                    .addComponent(txtTelefonoClientes)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFechaClientes)
-                                    .addComponent(txtCorreoOpcionalClientes)
-                                    .addComponent(txtCorreoClientes)))))
+                            .addComponent(txtCiudadClientes)
+                            .addComponent(txtDireccionClientes)
+                            .addComponent(txtTelefonoClientes)
+                            .addComponent(txtClienteClientes, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCelularClientes, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCorreoClientes, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCorreoOpcionalClientes, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtFechaClientes)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,7 +144,7 @@ public class Vistaclientes extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNitClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNitClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -189,6 +196,11 @@ public class Vistaclientes extends javax.swing.JFrame {
 
             }
         ));
+        tbListaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbListaClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbListaClientes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -197,8 +209,8 @@ public class Vistaclientes extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 998, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,14 +228,14 @@ public class Vistaclientes extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,6 +244,32 @@ public class Vistaclientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Cclientes objetoCliente = new Cclientes();
+        objetoCliente.insertarCliente(txtNitClientes, txtClienteClientes, txtDireccionClientes, txtCiudadClientes, txtTelefonoClientes, txtCelularClientes, txtCorreoClientes, txtCorreoOpcionalClientes, txtFechaClientes);
+        objetoCliente.MostrarClientes(tbListaClientes);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbListaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListaClientesMouseClicked
+       Cclientes objetoCliente = new Cclientes();
+        objetoCliente.seleccionarCliente(tbListaClientes, txtNitClientes, txtClienteClientes, txtDireccionClientes, txtCiudadClientes, txtTelefonoClientes, txtCelularClientes, txtCorreoClientes, txtCorreoOpcionalClientes, txtFechaClientes);
+        
+    }//GEN-LAST:event_tbListaClientesMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Cclientes objetoCliente = new Cclientes();
+        objetoCliente.ModificarClientes(txtNitClientes, txtClienteClientes, txtDireccionClientes, txtCiudadClientes, txtTelefonoClientes, txtCelularClientes, txtCorreoClientes, txtCorreoOpcionalClientes, txtFechaClientes);
+        objetoCliente.MostrarClientes(tbListaClientes);
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Cclientes objetoCliente = new Cclientes();
+        objetoCliente.EliminarCliente(txtNitClientes);
+        objetoCliente.MostrarClientes(tbListaClientes);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
