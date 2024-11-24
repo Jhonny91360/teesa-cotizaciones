@@ -13,7 +13,7 @@ public class Inicio {
 
     public static void main(String[] args) {
         
-        Vistaclientes objetoVista = new Vistaclientes();
+        VistaClientes objetoVista = new VistaClientes();
         objetoVista.setVisible(true);
         
         

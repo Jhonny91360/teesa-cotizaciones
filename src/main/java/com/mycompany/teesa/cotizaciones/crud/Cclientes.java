@@ -19,8 +19,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author JHON SANCHEZ
  */
-public class Cclientes {
+public class CClientes {
 
+
+
+    int codigo;
     String nitCedula;
     String cliente;
     String direccion;
@@ -30,6 +33,14 @@ public class Cclientes {
     String correo;
     String CorreoOpcional;
     String fechaRegistro;
+    
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    } 
     
     public String getNitCedula() {
         return nitCedula;
@@ -111,6 +122,7 @@ public class Cclientes {
         
         String sql="";
         
+        modelo.addColumn("ID_Cliente");
         modelo.addColumn("NIT_CEDULA");
         modelo.addColumn("Cliente");
         modelo.addColumn("Dirección");
@@ -125,7 +137,7 @@ public class Cclientes {
         
         sql ="select * from clientes;";
         
-        String [] datos = new String[9];
+        String [] datos = new String[10];
         Statement st;
 
             try {
@@ -146,6 +158,7 @@ public class Cclientes {
                     datos[6]= rs.getString(7);
                     datos[7]= rs.getString(8);
                     datos[8]= rs.getString(9);
+                    datos[9]= rs.getString(10);
                     
                     modelo.addRow(datos);
                     
@@ -202,22 +215,23 @@ public class Cclientes {
         }
         
     }    
-        public void seleccionarCliente(JTable paramTablaClientes, JTextField paramNitCedula, JTextField paramCliente, JTextField paramDireccion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
+        public void seleccionarCliente(JTable paramTablaClientes, JTextField paramId, JTextField paramNitCedula, JTextField paramCliente, JTextField paramDireccion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
             
             try {
                 
                 int fila=paramTablaClientes.getSelectedRow();
                 
                 if (fila>=0) {
-                    paramNitCedula.setText(paramTablaClientes.getValueAt(fila, 0).toString());
-                    paramCliente.setText(paramTablaClientes.getValueAt(fila, 1).toString());
-                    paramDireccion.setText(paramTablaClientes.getValueAt(fila, 2).toString());
-                    paramCiudad.setText(paramTablaClientes.getValueAt(fila, 3).toString());
-                    paramTelefonoFijo.setText(paramTablaClientes.getValueAt(fila, 4).toString());
-                    paramNumeroCelular.setText(paramTablaClientes.getValueAt(fila, 5).toString());
-                    paramCorreo.setText(paramTablaClientes.getValueAt(fila, 6).toString());
-                    paramCorreoOpcional.setText(paramTablaClientes.getValueAt(fila, 7).toString());
-                    paramFechaRegistro.setText(paramTablaClientes.getValueAt(fila, 8).toString());
+                    paramId.setText(paramTablaClientes.getValueAt(fila, 0).toString());
+                    paramNitCedula.setText(paramTablaClientes.getValueAt(fila, 1).toString());
+                    paramCliente.setText(paramTablaClientes.getValueAt(fila, 2).toString());
+                    paramDireccion.setText(paramTablaClientes.getValueAt(fila, 3).toString());
+                    paramCiudad.setText(paramTablaClientes.getValueAt(fila, 4).toString());
+                    paramTelefonoFijo.setText(paramTablaClientes.getValueAt(fila, 5).toString());
+                    paramNumeroCelular.setText(paramTablaClientes.getValueAt(fila, 6).toString());
+                    paramCorreo.setText(paramTablaClientes.getValueAt(fila, 7).toString());
+                    paramCorreoOpcional.setText(paramTablaClientes.getValueAt(fila, 8).toString());
+                    paramFechaRegistro.setText(paramTablaClientes.getValueAt(fila, 9).toString());
                 }
                 
                 else
@@ -232,8 +246,9 @@ public class Cclientes {
             }
             
         }
-         public void ModificarClientes(JTextField paramNitCedula, JTextField paramCliente, JTextField paramDirrecion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
+         public void ModificarClientes(JTextField paramId, JTextField paramNitCedula, JTextField paramCliente, JTextField paramDirrecion, JTextField paramCiudad, JTextField paramTelefonoFijo, JTextField paramNumeroCelular, JTextField paramCorreo, JTextField paramCorreoOpcional, JTextField paramFechaRegistro){
         
+        setCodigo(Integer.parseInt(paramId.getText()));
         setNitCedula(paramNitCedula.getText());
         setCliente(paramCliente.getText());
         setDireccion(paramDirrecion.getText());
@@ -246,7 +261,7 @@ public class Cclientes {
         
         Cconexion objetoConexion = new Cconexion();
         
-        String consulta = "UPDATE clientes SET NIT_CEDULA=?, Cliente=?, Dirección=?, Ciudad=?, Telefono_fijo=?, Numero_celular=?, Correo=?, Corre_opcional=?, Fecha_registro=?";
+        String consulta = "UPDATE clientes SET NIT_CEDULA=?, Cliente=?, Dirección=?, Ciudad=?, Telefono_fijo=?, Numero_celular=?, Correo=?, Corre_opcional=?, Fecha_registro=? where clientes.id =?";
         
         try {
             
@@ -264,6 +279,7 @@ public class Cclientes {
             cs.setString(7, getCorreo());
             cs.setString(8, getCorreoOpcional());
             cs.setObject(9, parsedFechaRegistro);
+            cs.setInt(10, getCodigo());
             
             cs.execute();
                    
@@ -273,16 +289,16 @@ public class Cclientes {
             JOptionPane.showMessageDialog(null,"Error:" + e.toString());
         }
     }   
-         public void EliminarCliente(JTextField paramNitCedula){
+         public void EliminarCliente(JTextField paramId){
         
-        setNitCedula(paramNitCedula.getText());
+        setCodigo(Integer.parseInt(paramId.getText()) );
 
         Cconexion objetoConexion = new Cconexion();
-        String consulta= "delete from clientes where clientes.NIT_CEDULA=?";
+        String consulta= "delete from clientes where clientes.id=?";
         
         try {
             CallableStatement cs= objetoConexion.establecerConexion().prepareCall(consulta);
-            cs.setString(1, getNitCedula());
+            cs.setInt(1, getCodigo());
             
             cs.execute();
             
