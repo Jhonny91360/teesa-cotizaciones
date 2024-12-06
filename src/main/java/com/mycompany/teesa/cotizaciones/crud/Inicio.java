@@ -13,13 +13,13 @@ public class Inicio {
 
     public static void main(String[] args) {
         
-        VistaClientes objetoVista = new VistaClientes();
-        objetoVista.setVisible(true);
+        //VistaProductos objetoVista = new VistaProductos();
+        //objetoVista.setVisible(true);
         
+        VistaNuevaCotizacion objetoVistaNuevaCotizacion = new VistaNuevaCotizacion();
+        objetoVistaNuevaCotizacion.setVisible(true);
         
- /**
- *VistaProductos objetoVista = new VistaProductos();
- *objetoVista.setVisible(true);
- */       
+        //VistaSeleccionarProducto objetoVistaSeleccionarProducto= new VistaSeleccionarProducto();
+        //objetoVistaSeleccionarProducto.setVisible(true);
     }
 }
