@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -267,4 +268,62 @@ public class CProductos {
              JOptionPane.showMessageDialog(null, "Error: "+e.toString());
         }
     }
+     
+     public void BuscarProductos(JTable paramTablaTotalProductos, String palabraClave) {
+    Cconexion objetoConexion = new Cconexion();
+
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    // Definir las columnas de la tabla
+    modelo.addColumn("Id");
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Referencia");
+    modelo.addColumn("Marca");
+    modelo.addColumn("Valor/hora");
+    modelo.addColumn("Descripcion");
+    modelo.addColumn("Foto");
+
+    // Consulta SQL con filtro
+    String sql = "SELECT * FROM Productos WHERE nombre LIKE ? OR referencia LIKE ? OR marcar LIKE ?";
+
+    try {
+        PreparedStatement ps = objetoConexion.establecerConexion().prepareStatement(sql);
+        String filtro = "%" + palabraClave + "%";
+        ps.setString(1, filtro);
+        ps.setString(2, filtro);
+        ps.setString(3, filtro);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            String id = rs.getString("id");
+            String nombre = rs.getString("nombre");
+            String referencia = rs.getString("referencia");
+            String marca = rs.getString("marcar");
+            String precioHora = rs.getString("precio_hora");
+            String descripcion = rs.getString("descripcion");
+
+            byte[] imageBytes = rs.getBytes("foto");
+            Image foto = null;
+
+            if (imageBytes != null) {
+                try {
+                    ImageIcon imageIcon = new ImageIcon(imageBytes);
+                    foto = imageIcon.getImage();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+                }
+                modelo.addRow(new Object[]{id, nombre, referencia, marca, precioHora, descripcion, foto});
+            } else {
+                modelo.addRow(new Object[]{id, nombre, referencia, marca, precioHora, descripcion, ""});
+            }
+        }
+
+        // Actualizar el modelo de la tabla
+        paramTablaTotalProductos.setModel(modelo);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+    }
+}
 }

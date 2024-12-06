@@ -15,8 +15,13 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
     /**
      * Creates new form VistaSeleccionarProducto
      */
-    public VistaSeleccionarProducto() {
+    
+    private final VistaNuevaCotizacion vistaNuevaCotizacion; //referencia a la vista principal
+    
+    public VistaSeleccionarProducto(VistaNuevaCotizacion vistaNuevaCotizacion) {
         initComponents();
+        
+        this.vistaNuevaCotizacion = vistaNuevaCotizacion;           //inicializo
         
         this.setLocationRelativeTo(null);
         
@@ -60,6 +65,7 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
         tb_sel_prod_productos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         area_sel_prod_producto_descrip = new javax.swing.JTextArea();
+        txt_sel_prod_producto_buscar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -207,6 +213,23 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
         area_sel_prod_producto_descrip.setRows(5);
         jScrollPane2.setViewportView(area_sel_prod_producto_descrip);
 
+        txt_sel_prod_producto_buscar.setText("Buscar...");
+        txt_sel_prod_producto_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_sel_prod_producto_buscarActionPerformed(evt);
+            }
+        });
+        txt_sel_prod_producto_buscar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txt_sel_prod_producto_buscarPropertyChange(evt);
+            }
+        });
+        txt_sel_prod_producto_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_sel_prod_producto_buscarKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,9 +237,13 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(81, 81, 81)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(63, 63, 63))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_sel_prod_producto_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(166, 166, 166))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(42, 42, 42)
@@ -226,14 +253,15 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(344, 344, 344)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(344, 344, 344)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(433, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_sel_prod_producto_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -253,7 +281,8 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_sel_prod_producto_marcaActionPerformed
 
     private void bt_sel_prod_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_sel_prod_cargarActionPerformed
-        JOptionPane.showMessageDialog(null,"hola"+txt_sel_prod_producto_referencia.getText());
+        vistaNuevaCotizacion.agregarProducto(txt_sel_prod_producto_nombre.getText(),Double.parseDouble(txt_sel_prod_producto_valor_hora.getText()) ,1 ); //Llamo al metodo de  la vista principal que me permite agregar productos la tabla
+        this.dispose(); //cerrar ventana
     }//GEN-LAST:event_bt_sel_prod_cargarActionPerformed
 
     private void tb_sel_prod_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_sel_prod_productosMouseClicked
@@ -265,6 +294,23 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
     private void txt_sel_prod_producto_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sel_prod_producto_idActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_sel_prod_producto_idActionPerformed
+
+    private void txt_sel_prod_producto_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sel_prod_producto_buscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_sel_prod_producto_buscarActionPerformed
+
+    private void txt_sel_prod_producto_buscarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_sel_prod_producto_buscarPropertyChange
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_txt_sel_prod_producto_buscarPropertyChange
+
+    private void txt_sel_prod_producto_buscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_sel_prod_producto_buscarKeyTyped
+        // TODO add your handling code here:
+        // JOptionPane.showMessageDialog(null,"hola"+txt_sel_prod_producto_buscar.getText());
+        CProductos objetoProductos = new CProductos();
+        objetoProductos.BuscarProductos(tb_sel_prod_productos,txt_sel_prod_producto_buscar.getText());
+        
+    }//GEN-LAST:event_txt_sel_prod_producto_buscarKeyTyped
 
     /**
      * @param args the command line arguments
@@ -296,7 +342,7 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaSeleccionarProducto().setVisible(true);
+                //new VistaSeleccionarProducto().setVisible(true);
             }
         });
     }
@@ -316,6 +362,7 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lb_sel_prod_imagen;
     private javax.swing.JTable tb_sel_prod_productos;
+    private javax.swing.JTextField txt_sel_prod_producto_buscar;
     private javax.swing.JTextField txt_sel_prod_producto_id;
     private javax.swing.JTextField txt_sel_prod_producto_marca;
     private javax.swing.JTextField txt_sel_prod_producto_nombre;
