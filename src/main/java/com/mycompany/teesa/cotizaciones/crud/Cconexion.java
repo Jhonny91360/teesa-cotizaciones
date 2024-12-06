@@ -30,7 +30,7 @@ public class Cconexion {
         try {
             Class.forName("org.postgresql.Driver");
             conectar = DriverManager.getConnection(cadena,usuario,contrasena);
-            JOptionPane.showMessageDialog(null,"Se conecto correctamente a la base de datos");
+            // JOptionPane.showMessageDialog(null,"Se conecto correctamente a la base de datos");
         } catch (HeadlessException | ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.toString());
         }
