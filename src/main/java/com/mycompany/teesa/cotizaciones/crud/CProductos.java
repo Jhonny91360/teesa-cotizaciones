@@ -86,7 +86,7 @@ public class CProductos {
 
    
     public void MostrarProductos(JTable paramTablaTotalProductos){
-        Cconexion objetoConexion = new Cconexion();
+        CConexion objetoConexion = new CConexion();
         
         DefaultTableModel modelo = new DefaultTableModel();
         
@@ -155,7 +155,7 @@ public class CProductos {
         setPrecio_hora(Float.parseFloat(paramPrecioHora.getText()));
         setDescripcion(paramDescripcion.getText());
         
-        Cconexion objetoConexion = new Cconexion();
+        CConexion objetoConexion = new CConexion();
         String consulta= "insert into Productos(nombre,referencia,marcar,precio_hora,foto,descripcion) values(?,?,?,?,?,?);";
         
         try {
@@ -223,7 +223,7 @@ public class CProductos {
         setPrecio_hora(Float.parseFloat(paramPrecioHora.getText()));
         setDescripcion(paramDescripcion.getText());
         
-        Cconexion objetoConexion = new Cconexion();
+        CConexion objetoConexion = new CConexion();
         String consulta= "update Productos SET nombre=?, referencia=?, marcar=?, precio_hora=?,foto=?, descripcion=? where Productos.id =?;";
         
         try {
@@ -254,7 +254,7 @@ public class CProductos {
         
         setCodigo(Integer.parseInt(paramId.getText()) );
 
-        Cconexion objetoConexion = new Cconexion();
+        CConexion objetoConexion = new CConexion();
         String consulta= "delete from Productos where Productos.id=?;";
         
         try {
@@ -270,7 +270,7 @@ public class CProductos {
     }
      
      public void BuscarProductos(JTable paramTablaTotalProductos, String palabraClave) {
-    Cconexion objetoConexion = new Cconexion();
+    CConexion objetoConexion = new CConexion();
 
     DefaultTableModel modelo = new DefaultTableModel();
 
