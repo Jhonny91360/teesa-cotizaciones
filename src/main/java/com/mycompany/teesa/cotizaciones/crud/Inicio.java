@@ -16,10 +16,16 @@ public class Inicio {
         //VistaProductos objetoVista = new VistaProductos();
         //objetoVista.setVisible(true);
         
+        //VistaClientes objetoVista= new VistaClientes();
+        //objetoVista.setVisible(true);
+        
         VistaNuevaCotizacion objetoVistaNuevaCotizacion = new VistaNuevaCotizacion();
         objetoVistaNuevaCotizacion.setVisible(true);
         
         //VistaSeleccionarProducto objetoVistaSeleccionarProducto= new VistaSeleccionarProducto();
         //objetoVistaSeleccionarProducto.setVisible(true);
+        
+        //VistaSeleccionarCliente objetoVistaSeleccionarCliente = new VistaSeleccionarCliente();
+        //objetoVistaSeleccionarCliente.setVisible(true);
     }
 }

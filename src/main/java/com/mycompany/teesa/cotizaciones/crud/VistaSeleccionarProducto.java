@@ -281,7 +281,7 @@ public class VistaSeleccionarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_sel_prod_producto_marcaActionPerformed
 
     private void bt_sel_prod_cargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_sel_prod_cargarActionPerformed
-        vistaNuevaCotizacion.agregarProducto(txt_sel_prod_producto_nombre.getText(),Double.parseDouble(txt_sel_prod_producto_valor_hora.getText()) ,1 ); //Llamo al metodo de  la vista principal que me permite agregar productos la tabla
+        vistaNuevaCotizacion.agregarProducto(txt_sel_prod_producto_nombre.getText(),txt_sel_prod_producto_marca.getText(),area_sel_prod_producto_descrip.getText(),Double.parseDouble(txt_sel_prod_producto_valor_hora.getText()) ,1 ); //Llamo al metodo de  la vista principal que me permite agregar productos la tabla
         this.dispose(); //cerrar ventana
     }//GEN-LAST:event_bt_sel_prod_cargarActionPerformed
 

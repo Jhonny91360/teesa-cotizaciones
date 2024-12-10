@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author jhonn
  * Para conectar con la BDD postgresql
  */
-public class Cconexion {
+public class CConexion {
     Connection conectar= null;
     
     String usuario="postgres";
